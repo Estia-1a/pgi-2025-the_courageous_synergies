@@ -14,3 +14,32 @@
 void helloWorld() {
     printf("Hello World !");
 }
+
+void dimension(char *source_path)
+{
+    int width = 0;
+    int height = 0;
+    unsigned char *data;
+    int channel_count;
+
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+
+    printf("Width : %d, Height : %d\n", width, height);
+
+    return;
+}
+
+void first_pixel (char *source_path)
+{
+    /*
+    int width = 0;
+    int height = 0;
+    unsigned char *data;
+    int channel_count;
+
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+
+    printf("%c %c %c\n", data[0][0], data[0][1], data[0][2]);
+    */
+    return;
+}
