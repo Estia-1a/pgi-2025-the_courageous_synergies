@@ -26,6 +26,8 @@ void dimension(char *source_path)
 
     printf("dimension: %d, %d\n", width, height);
 
+    free_image_data(data);
+
     return;
 }
 
@@ -45,6 +47,8 @@ void first_pixel(char *source_path)
     int b = (int)data[2];
     
     printf("first_pixel: %d, %d, %d\n", r, g, b);
+
+    free_image_data(data);
     
     return;
 }
@@ -66,6 +70,7 @@ void tenth_pixel(char *source_path)
     int g = (int)data[3*10-2];
     int b = (int)data[3*10-1];
     printf("tenth_pixel: %d, %d, %d\n", r, g, b);
+    free_image_data(data);
     return;
 }
 
@@ -86,6 +91,49 @@ void second_line (char *source_path)
     int g= (int)data[3*width+1];
     int b= (int)data[3*width+2];
     printf("second_line: %d, %d, %d\n",r,g,b);
+    free_image_data(data);
+    return;
+}
+
+void max_component (char *source_path)
+{
+    int width = 0;
+    int height =0;
+    unsigned char *data;
+    int channel_count;
+
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+    int max_r=0;
+    int max_g=0;
+    int max_b=0;
+    int x,y,xr=0,yr=0,xg=0,yg=0,xb=0,yb=0;
+    pixelRGB *pixelimon;
+    for (y=0; y<height; y++){
+        for (x=0; x<width; x++){
+            pixelimon = get_pixel(data, width, height, channel_count, x, y);
+        
+            if (pixelimon->R > max_r) {
+                max_r = pixelimon->R;
+                xr = x;
+                yr = y;
+
+            }
+            if (pixelimon ->G > max_g) {
+                max_g = pixelimon ->G;
+                xg = x;
+                yg = y;
+            }
+            if (pixelimon ->B > max_b) {
+                max_b = pixelimon ->B;
+                xb=x;
+                yb=y;
+            }
+    }
+    }
+    printf("max_component R (%d, %d): %d\n", xr, yr, max_r);
+    printf("max_component G (%d, %d): %d\n", xg, yg, max_g);
+    printf("max_component B (%d, %d): %d\n", xb, yb, max_b);
+    free_image_data(data);
     return;
 }
 
