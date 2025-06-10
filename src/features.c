@@ -65,6 +65,6 @@ void tenth_pixel (char *source_path)
     int r = (int)data[3*10-3];
     int g = (int)data[3*10-2];
     int b = (int)data[3*10-1];
-    printf("tenth_pixel: %d %d %d\n", r, g, b);
+    printf("tenth_pixel: %d, %d, %d\n", r, g, b);
     return;
 }
