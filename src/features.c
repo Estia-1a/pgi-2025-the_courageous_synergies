@@ -29,7 +29,7 @@ void dimension(char *source_path)
     return;
 }
 
-void first_pixel (char *source_path)
+void first_pixel(char *source_path)
 {
     
     int width = 0;
@@ -49,9 +49,9 @@ void first_pixel (char *source_path)
     return;
 }
 
-void tenth_pixel (char *source_path)
+void tenth_pixel(char *source_path)
 {
-    int width =0;
+    int width = 0;
     int height = 0;
     unsigned char *data;
     int channel_count;
@@ -66,5 +66,29 @@ void tenth_pixel (char *source_path)
     int g = (int)data[3*10-2];
     int b = (int)data[3*10-1];
     printf("tenth_pixel: %d %d %d\n", r, g, b);
+    return;
+}
+
+void print_pixel(char *source_path, int x, int y)
+{
+    int width = 0;
+    int height = 0;
+    unsigned char *data;
+    int channel_count;
+
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+    if (width * height <= x*y) {
+        printf("Image is too small. Please provide a bigger image\n");
+        return;
+    }
+    pixelRGB *pixel = get_pixel(data, width, height, channel_count, x, y);
+
+    int r = pixel->R;
+    int g = pixel->G;
+    int b = pixel->B;
+    printf("print_pixel (%d, %d): %d, %d, %d\n", x, y, r, g, b);
+
+    free_image_data(data);
+
     return;
 }
