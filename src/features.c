@@ -24,7 +24,7 @@ void dimension(char *source_path)
 
     read_image_data(source_path, &data, &width, &height, &channel_count);
 
-    printf("Width : %d, Height : %d\n", width, height);
+    printf("dimension: %d, %d\n", width, height);
 
     return;
 }
@@ -44,7 +44,7 @@ void first_pixel (char *source_path)
     int g = (int)data[1];
     int b = (int)data[2];
     
-    printf("%d %d %d\n", r, g, b);
+    printf("first_pixel: %d, %d, %d\n", r, g, b);
     
     return;
 }
@@ -65,6 +65,6 @@ void tenth_pixel (char *source_path)
     int r = (int)data[3*10-3];
     int g = (int)data[3*10-2];
     int b = (int)data[3*10-1];
-    printf("tenth_pixel: %d %d %d\n", r, g, b);
+    printf("tenth_pixel: %d, %d, %d\n", r, g, b);
     return;
 }
