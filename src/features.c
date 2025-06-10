@@ -24,7 +24,7 @@ void dimension(char *source_path)
 
     read_image_data(source_path, &data, &width, &height, &channel_count);
 
-    printf("Width : %d, Height : %d\n", width, height);
+    printf("dimension: %d, %d\n", width, height);
 
     return;
 }
