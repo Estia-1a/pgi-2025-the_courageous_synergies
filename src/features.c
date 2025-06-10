@@ -44,7 +44,7 @@ void first_pixel (char *source_path)
     int g = (int)data[1];
     int b = (int)data[2];
     
-    printf("%d %d %d\n", r, g, b);
+    printf("first_pixel: %d, %d, %d\n", r, g, b);
     
     return;
 }
