@@ -68,3 +68,23 @@ void tenth_pixel (char *source_path)
     printf("tenth_pixel: %d %d %d\n", r, g, b);
     return;
 }
+
+void second_line (char *source_path)
+{
+    int width = 0;
+    int height = 0;
+    unsigned char *data;
+    int channel_count;
+
+    read_image_data(source_path, &data, &width,&height, &channel_count);
+    if (height<2) {
+        printf("Image should be at least 2 pixels in height\n");
+        return;
+    }
+
+    int r= (int)data[3*width+0];
+    int g= (int)data[3*width+1];
+    int b= (int)data[3*width+2];
+    printf("second_line: %d, %d, %d\n",r,g,b);
+    return;
+}
