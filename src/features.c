@@ -314,6 +314,7 @@ void stat_report(char *source_path)
     }
     
     max_pixel(source_path);
+    min_pixel(source_path);
     max_component(source_path, 'R');
     max_component(source_path, 'G');
     max_component(source_path, 'B');
