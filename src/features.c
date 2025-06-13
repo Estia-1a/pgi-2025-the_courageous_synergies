@@ -268,6 +268,7 @@ void stat_report(char *source_path)
        printf("Erreur dans l'ouverture du fichier de rapport...\n");
     }
     
+    max_pixel(source_path);
     max_component(source_path, 'R');
     max_component(source_path, 'G');
     max_component(source_path, 'B');

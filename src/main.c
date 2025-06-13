@@ -66,5 +66,8 @@ int main(int argc, char **argv) {
     color_blue(configuration.filenames[0]);
   }
   
+  if ( strncmp( configuration.command, "stat_report", 11 ) == 0 ) {
+    stat_report(configuration.filenames[0]);
+  }
   return 0;
 }
