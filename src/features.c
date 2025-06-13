@@ -443,7 +443,7 @@ void rotate_acw(char *source_path)
     
 }
 
-void color_grey(char *source_path){
+void color_gray(char *source_path){
  
     int width = 0;
     int height = 0;
@@ -460,6 +460,26 @@ void color_grey(char *source_path){
         data[i+2] = data[i];
     }
  
+    write_image_data("image_out.bmp", data, width, height);
+    free_image_data(data);
+ 
+    return;
+}
+
+void color_gray_luminance(char *source_path){
+    int width = 0;
+    int height = 0;
+    unsigned char *data;
+    int channel_count;
+ 
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+   
+    int i;
+    for(i=0; i<width*height*channel_count; i=i+3){
+        data[i]= (0.21*data[i]+0.72*data[i+1]+0.07*data[i+2])/3;
+        data[i+1]= data[i];
+        data[i+2]= data[i];
+    }
     write_image_data("image_out.bmp", data, width, height);
     free_image_data(data);
  
