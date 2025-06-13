@@ -1,0 +1,19 @@
+/home/runner/work/pgi-2025-the_courageous_synergies/pgi-2025-the_courageous_synergies/src/features.c: In function ‘max_pixel’:
+/home/runner/work/pgi-2025-the_courageous_synergies/pgi-2025-the_courageous_synergies/src/features.c:105:13: error: ‘x’ redeclared as different kind of symbol
+  105 |         int x=0;
+      |             ^
+/home/runner/work/pgi-2025-the_courageous_synergies/pgi-2025-the_courageous_synergies/src/features.c:98:21: note: previous definition of ‘x’ with type ‘int’
+   98 | void max_pixel (int x, int y, char *source_path)
+      |                 ~~~~^
+/home/runner/work/pgi-2025-the_courageous_synergies/pgi-2025-the_courageous_synergies/src/features.c:106:13: error: ‘y’ redeclared as different kind of symbol
+  106 |         int y=0;
+      |             ^
+/home/runner/work/pgi-2025-the_courageous_synergies/pgi-2025-the_courageous_synergies/src/features.c:98:28: note: previous definition of ‘y’ with type ‘int’
+   98 | void max_pixel (int x, int y, char *source_path)
+      |                        ~~~~^
+gmake[2]: *** [CMakeFiles/freud.dir/build.make:93: CMakeFiles/freud.dir/src/features.c.o] Error 1
+gmake[2]: *** Waiting for unfinished jobs....
+gmake[1]: *** [CMakeFiles/Makefile2:87: CMakeFiles/freud.dir/all] Error 2
+gmake: *** [Makefile:136: all] Error 2
+
+The process '/usr/local/bin/cmake' failed with exit code 2
