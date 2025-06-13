@@ -112,3 +112,67 @@ void print_pixel(char *source_path, int x, int y)
 
     return;
 }
+
+void color_red(char *source_path)
+{
+    int width = 0;
+    int height = 0;
+    unsigned char *data;
+    int channel_count;
+
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+
+    int i;
+    for(i=0; i<width*height*3; i=i+3)
+    {
+        data[i+1] = 0;
+        data[i+2] = 0;
+    }
+
+    write_image_data("image_out.bmp", data, width, height);
+
+    return;
+}
+
+void color_green(char *source_path)
+{
+    int width = 0;
+    int height = 0;
+    unsigned char *data;
+    int channel_count;
+
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+
+    int i;
+    for(i=0; i<width*height*3; i=i+3)
+    {
+        data[i] = 0;
+        data[i+2] = 0;
+    }
+
+    write_image_data("image_out.bmp", data, width, height);
+
+    return;
+}
+
+void color_blue(char *source_path)
+{
+    int width = 0;
+    int height = 0;
+    unsigned char *data;
+    int channel_count;
+
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+
+    int i;
+    for(i=0; i<width*height*3; i=i+3)
+    {
+        data[i] = 0;
+        data[i+1] = 0;
+    }
+
+    write_image_data("image_out.bmp", data, width, height);
+
+    return;
+}
+    
