@@ -83,8 +83,10 @@ int main(int argc, char **argv) {
   if ( strncmp( configuration.command, "rotate_acw", 10 ) == 0 ) {
     rotate_acw(configuration.filenames[0]);
   }
-
-
+if ( strncmp( configuration.command, "color_desaturate", 10 ) == 0 ) {
+    color_desaturate(configuration.filenames[0]);
+  }
+  
 
   return 0;
 }
