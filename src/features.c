@@ -139,6 +139,51 @@ void max_pixel(char *source_path)
 	return ;
 }
 
+void min_pixel (char *source_path)
+{
+    int width = 0;
+    int height = 0;
+    unsigned char *data;
+    int channel_count;
+    int somme=0;
+	int x=0;
+	int y=0;
+	int x_min = 0;
+	int y_min=0;
+	int r;
+	int g;
+	int b;
+
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+
+	pixelRGB *pixel_min;
+	
+    int somme_min = 255*3;
+	for (y=0;y<width; y=y+1){
+		for (x=0; x < height; x=x+1) {
+			pixel_min=get_pixel(data, width, height, channel_count, x, y);
+			
+			somme= pixel_min->R + pixel_min->G + pixel_min->B ;
+			
+			
+			if (somme < somme_min){
+				somme_min=somme;
+				r=pixel_min->R;
+				g=pixel_min->G;
+				b=pixel_min->B;
+				
+				x_min=x;
+				y_min=y;
+				
+			} 
+		}
+	}
+        
+    printf("min_pixel(%d,%d): %d, %d, %d\n",x_min,y_min,r,g,b);
+	
+	free_image_data(data);
+	return ;
+}
 
 void max_component(char *source_path, unsigned char component)
 {
@@ -268,6 +313,8 @@ void stat_report(char *source_path)
        printf("Erreur dans l'ouverture du fichier de rapport...\n");
     }
     
+    max_pixel(source_path);
+    min_pixel(source_path);
     max_component(source_path, 'R');
     max_component(source_path, 'G');
     max_component(source_path, 'B');
@@ -396,4 +443,25 @@ void rotate_acw(char *source_path)
     
 }
 
-    
+void color_grey(char *source_path){
+ 
+    int width = 0;
+    int height = 0;
+    unsigned char *data;
+    int channel_count;
+ 
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+   
+    int i;
+    for(i=0; i<width*height*channel_count; i=i+3)
+    {
+        data[i] = (data[i]+data[i+1]+data[i+2])/3;
+        data[i+1] = data[i];
+        data[i+2] = data[i];
+    }
+ 
+    write_image_data("image_out.bmp", data, width, height);
+    free_image_data(data);
+ 
+    return;
+}
