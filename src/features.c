@@ -389,3 +389,40 @@ void color_blue(char *source_path)
     return;
 }
     
+void color_desaturate(char *source_path)
+{
+    int width=0, height=0;
+    unsigned char* data;
+    int channel_count;
+    read_image_data(source_path, &data,&width,&height,&channel_count);
+    int i, max, min;
+    for (i=0; i<width*height*channel_count; i=i+channel_count)
+    {
+        if (data[i] > data[i + 1]) 
+        {
+            max = data[i];
+            min = data[i + 1];
+        } 
+        else 
+        {
+            max = data[i + 1];
+            min = data[i];
+        }
+
+        if (data[i + 2] > max) 
+        {
+            max = data[i + 2];
+        } 
+        else if (data[i + 2] < min) 
+        {
+            min = data[i + 2];
+        }
+        data[i]=(min+max)/2;
+        data[i+1]=(min+max)/2;
+        data[i+2]=(min+max)/2;
+
+    }
+    
+    write_image_data("image_out.bmp", data, width, height);
+    return;
+}
