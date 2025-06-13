@@ -95,6 +95,59 @@ void second_line (char *source_path)
     return;
 }
 
+void max_pixel (int x, int y, char *source_path)
+{
+    int width = 0;
+    int height = 0;
+    unsigned char *data;
+    int channel_count;
+    int somme=0;
+	int x=0;
+	int y=0;
+	int x_max = 0;
+	int y_max=0;
+	int r;
+	int g;
+	int b;
+
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+    
+    if (width * height <= 10) {
+        printf("Image is too small. Please provide a bigger image\n");
+        return;
+    }
+
+	pixelRGB *pixel_max;
+	
+    int somme_max = 0;
+	for (y=0;y<width; y=y+1){
+		for (x=0; x < height; x=x+1) {
+			pixel_max=get_pixel(data, width, height, channel_count, x, y);
+			
+			somme= pixel_max->R + pixel_max->G + pixel_max->B ;
+			
+			
+			if (somme > somme_max){
+				somme=somme_max;
+				r=pixel_max->R;
+				g=pixel_max->G;
+				b=pixel_max->B;
+				
+				
+				x_max=x;
+				y_max=y;
+				
+			} 
+		}
+	}
+        
+    printf("max_pixel(%d,%d): %d, %d, %d\n",x_max,y_max,r,g,b);
+	
+	free_image_data(data);
+	return ;
+}
+
+
 void max_component (char *source_path)
 {
     int width = 0;
