@@ -95,7 +95,64 @@ void second_line (char *source_path)
     return;
 }
 
+<<<<<<< HEAD
 void max_component (char *source_path, unsigned char component)
+=======
+void max_pixel (int x, int y, char *source_path)
+{
+    int width = 0;
+    int height = 0;
+    unsigned char *data;
+    int channel_count;
+    int somme=0;
+	int x=0;
+	int y=0;
+	int x_max = 0;
+	int y_max=0;
+	int r;
+	int g;
+	int b;
+
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+    
+    if (width * height <= 10) {
+        printf("Image is too small. Please provide a bigger image\n");
+        return;
+    }
+
+	pixelRGB *pixel_max;
+	
+    int somme_max = 0;
+	for (y=0;y<width; y=y+1){
+		for (x=0; x < height; x=x+1) {
+			pixel_max=get_pixel(data, width, height, channel_count, x, y);
+			
+			somme= pixel_max->R + pixel_max->G + pixel_max->B ;
+			
+			
+			if (somme > somme_max){
+				somme=somme_max;
+				r=pixel_max->R;
+				g=pixel_max->G;
+				b=pixel_max->B;
+				
+				
+				x_max=x;
+				y_max=y;
+				
+			} 
+		}
+	}
+        
+    printf("max_pixel(%d,%d): %d, %d, %d\n",x_max,y_max,r,g,b);
+	
+	free_image_data(data);
+	return ;
+}
+
+
+void max_component (char *source_path)
+>>>>>>> 3d9ae56dee8737230d35ee242158482c8053ab85
 {
     int width = 0;
     int height =0;
@@ -166,14 +223,22 @@ void print_pixel(char *source_path, int x, int y)
     return;
 }
 
+<<<<<<< HEAD
 void min_component (char *source_path, unsigned char component)
 {
     int width = 0;
     int height =0;
+=======
+void color_red(char *source_path)
+{
+    int width = 0;
+    int height = 0;
+>>>>>>> 3d9ae56dee8737230d35ee242158482c8053ab85
     unsigned char *data;
     int channel_count;
 
     read_image_data(source_path, &data, &width, &height, &channel_count);
+<<<<<<< HEAD
     int min_r=255;
     int min_g=255;
     int min_b=255;
@@ -232,3 +297,60 @@ void stat_report(char *source_path)
     fclose (report);
     return;
 }
+=======
+
+    int i;
+    for(i=0; i<width*height*3; i=i+3)
+    {
+        data[i+1] = 0;
+        data[i+2] = 0;
+    }
+
+    write_image_data("image_out.bmp", data, width, height);
+
+    return;
+}
+
+void color_green(char *source_path)
+{
+    int width = 0;
+    int height = 0;
+    unsigned char *data;
+    int channel_count;
+
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+
+    int i;
+    for(i=0; i<width*height*3; i=i+3)
+    {
+        data[i] = 0;
+        data[i+2] = 0;
+    }
+
+    write_image_data("image_out.bmp", data, width, height);
+
+    return;
+}
+
+void color_blue(char *source_path)
+{
+    int width = 0;
+    int height = 0;
+    unsigned char *data;
+    int channel_count;
+
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+
+    int i;
+    for(i=0; i<width*height*3; i=i+3)
+    {
+        data[i] = 0;
+        data[i+1] = 0;
+    }
+
+    write_image_data("image_out.bmp", data, width, height);
+
+    return;
+}
+    
+>>>>>>> 3d9ae56dee8737230d35ee242158482c8053ab85

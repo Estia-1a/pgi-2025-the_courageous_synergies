@@ -44,10 +44,10 @@ int main(int argc, char **argv) {
   if ( strncmp( configuration.command, "print_pixel", 11 ) == 0 ) {
     print_pixel(configuration.filenames[0], atoi(configuration.arguments[0]), atoi(configuration.arguments[1]));
   }
-  
   if ( strncmp( configuration.command, "second_line", 11 ) == 0 ) {
     second_line(configuration.filenames[0]);
   }
+<<<<<<< HEAD
 
   if ( strncmp( configuration.command, "max_component", 11 ) == 0 ) {
     max_component(configuration.filenames[0], (unsigned char)configuration.arguments[0][0]);
@@ -55,6 +55,16 @@ int main(int argc, char **argv) {
 
   if ( strncmp( configuration.command, "min_component", 11 ) == 0 ) {
     min_component(configuration.filenames[0], (unsigned char)configuration.arguments[0][0]);
+=======
+  if ( strncmp( configuration.command, "color_red", 9 ) == 0 ) {
+    color_red(configuration.filenames[0]);
+  }
+  if ( strncmp( configuration.command, "color_green", 11 ) == 0 ) {
+    color_green(configuration.filenames[0]);
+  }
+  if ( strncmp( configuration.command, "color_blue", 10 ) == 0 ) {
+    color_blue(configuration.filenames[0]);
+>>>>>>> 3d9ae56dee8737230d35ee242158482c8053ab85
   }
   return 0;
 }
