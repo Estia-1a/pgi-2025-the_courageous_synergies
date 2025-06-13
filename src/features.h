@@ -20,6 +20,8 @@ void print_pixel(char *source_path, int x, int y);
 
 void max_pixel (char *source_path);
 
+void min_pixel (char *source_path);
+
 void color_red(char *source_path);
 
 void color_green(char *source_path);
