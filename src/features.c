@@ -296,7 +296,7 @@ void color_red(char *source_path)
     }
 
     write_image_data("image_out.bmp", data, width, height);
-
+    free_image_data(data);
     return;
 }
 
@@ -317,7 +317,7 @@ void color_green(char *source_path)
     }
 
     write_image_data("image_out.bmp", data, width, height);
-
+    free_image_data(data);
     return;
 }
 
@@ -338,7 +338,62 @@ void color_blue(char *source_path)
     }
 
     write_image_data("image_out.bmp", data, width, height);
-
+    free_image_data(data);
     return;
 }
+
+void invert(char *source_path)
+{
+    int width = 0;
+    int height = 0;
+    unsigned char *data;
+    int channel_count;
+
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+
+    int i;
+    for(i=0; i<width*height*channel_count; i=i+3)
+    {
+        data[i] = 255-data[i];
+        data[i+1] = 255-data[i+1];
+        data[i+2] = 255-data[i+2];
+    }
+
+    write_image_data("image_out.bmp", data, width, height);
+    free_image_data(data);
+    return;
+}
+
+void rotate_acw(char *source_path)
+{
+    int width = 0;
+    int height = 0;
+    unsigned char *data;
+    int channel_count;
+
+    unsigned char *new_data;
+
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+
+    read_image_data(source_path, &new_data, &width, &height, &channel_count);
+
+    int i;
+    int j;
+    for(j=0; j<height; j++)
+    {
+        for(i=0; i<width; i++)
+        {
+        new_data[((width -1 -i)*height +j)*channel_count] = data[(j*width + i)*channel_count];
+        new_data[((width -1 -i)*height +j)*channel_count +1] = data[(j*width + i)*channel_count +1];
+        new_data[((width -1 -i)*height +j)*channel_count +2] = data[(j*width + i)*channel_count +2];
+        }
+    }
+
+    write_image_data("image_out.bmp", new_data, height, width);
+    free_image_data(data);
+    free_image_data(new_data);
+    return;
+    
+}
+
     
