@@ -48,5 +48,13 @@ int main(int argc, char **argv) {
   if ( strncmp( configuration.command, "second_line", 11 ) == 0 ) {
     second_line(configuration.filenames[0]);
   }
+
+  if ( strncmp( configuration.command, "max_component", 11 ) == 0 ) {
+    max_component(configuration.filenames[0], (unsigned char)configuration.arguments[0][0]);
+  }
+
+  if ( strncmp( configuration.command, "min_component", 11 ) == 0 ) {
+    min_component(configuration.filenames[0], (unsigned char)configuration.arguments[0][0]);
+  }
   return 0;
 }
