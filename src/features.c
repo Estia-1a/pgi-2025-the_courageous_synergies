@@ -95,7 +95,7 @@ void second_line (char *source_path)
     return;
 }
 
-void max_pixel (int x, int y, char *source_path)
+void max_pixel(char *source_path)
 {
     int width = 0;
     int height = 0;
@@ -140,7 +140,7 @@ void max_pixel (int x, int y, char *source_path)
 }
 
 
-void max_component (char *source_path)
+void max_component(char *source_path, unsigned char component)
 {
     int width = 0;
     int height =0;
@@ -215,6 +215,10 @@ void min_component (char *source_path, unsigned char component)
 {
     int width = 0;
     int height =0;
+    unsigned char *data;
+    int channel_count;
+
+    read_image_data(source_path, &data, &width, &height, &channel_count);
 
     int min_r=255;
     int min_g=255;
@@ -257,12 +261,12 @@ void min_component (char *source_path, unsigned char component)
 
 void stat_report(char *source_path)
 {
-    FILE *report;
+    FILE *report = NULL;
     const char* report_path = "rapport.txt";
-    if (report == NULL) {
-        printf("Erreur dans l'ouverture du fichier de rapport...\n");
-    }
     report = freopen(report_path, "w",stdout);
+    if (report == NULL) {
+       printf("Erreur dans l'ouverture du fichier de rapport...\n");
+    }
     
     max_component(source_path, 'R');
     max_component(source_path, 'G');

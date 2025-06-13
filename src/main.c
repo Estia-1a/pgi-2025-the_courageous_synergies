@@ -50,11 +50,10 @@ int main(int argc, char **argv) {
   if ( strncmp( configuration.command, "max_pixel", 9 ) == 0 ) {
     max_pixel(configuration.filenames[0]);
   }
-  
+
   if ( strncmp( configuration.command, "max_component", 11 ) == 0 ) {
     max_component(configuration.filenames[0], (unsigned char)configuration.arguments[0][0]);
   }
-
   if ( strncmp( configuration.command, "min_component", 11 ) == 0 ) {
     min_component(configuration.filenames[0], (unsigned char)configuration.arguments[0][0]);
   }
@@ -66,7 +65,7 @@ int main(int argc, char **argv) {
   }
   if ( strncmp( configuration.command, "color_blue", 10 ) == 0 ) {
     color_blue(configuration.filenames[0]);
-
   }
+  
   return 0;
 }
