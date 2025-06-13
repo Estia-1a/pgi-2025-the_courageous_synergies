@@ -21,6 +21,5 @@ void color_green(char *source_path);
 
 void color_blue(char *source_path);
 
-
 #endif
  
