@@ -1,0 +1,5 @@
+/home/runner/work/pgi-2025-the_courageous_synergies/pgi-2025-the_courageous_synergies/src/main.c: In function ‘main’:
+/home/runner/work/pgi-2025-the_courageous_synergies/pgi-2025-the_courageous_synergies/src/main.c:72:5: warning: implicit declaration of function ‘color_gray’; did you mean ‘color_grey’? [-Wimplicit-function-declaration]
+   72 |     color_gray(configuration.filenames[0]);
+      |     ^~~~~~~~~~
+      |     color_grey
