@@ -30,8 +30,9 @@ void color_blue(char *source_path);
 
 void invert(char *source_path);
 
-void rotate_acw(char *source_path);
+void rotate_cw(char *source_path);
 
+void rotate_acw(char *source_path);
 
 void color_grey(char *source_path);
 

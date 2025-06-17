@@ -133,7 +133,7 @@ void max_pixel(char *source_path)
 		}
 	}
         
-    printf("max_pixel(%d,%d): %d, %d, %d\n",x_max,y_max,r,g,b);
+    printf("max_pixel (%d, %d): %d, %d, %d\n",x_max,y_max,r,g,b);
 	
 	free_image_data(data);
 	return ;
@@ -411,6 +411,37 @@ void invert(char *source_path)
     return;
 }
 
+void rotate_cw(char *source_path)
+{
+    int width = 0;
+    int height = 0;
+    unsigned char *data;
+    int channel_count;
+
+    unsigned char *new_data;
+
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+
+    read_image_data(source_path, &new_data, &width, &height, &channel_count);
+
+    int i;
+    int j;
+    for(j=0; j<height; j++)
+    {
+        for(i=0; i<width; i++)
+        {
+        new_data[((i*height + (height -1 -j)))*channel_count] = data[(j*width + 1)*channel_count];
+        new_data[((i*height + (height -1 -j)))*channel_count +1] = data[(j*width + 1)*channel_count +1];
+        new_data[((i*height + (height -1 -j)))*channel_count +2] = data[(j*width + 1)*channel_count +2];
+        }
+    }
+
+    write_image_data("image_out.bmp", new_data, height, width);
+    free_image_data(data);
+    free_image_data(new_data);
+    return;
+}
+
 void rotate_acw(char *source_path)
 {
     int width = 0;
@@ -440,7 +471,6 @@ void rotate_acw(char *source_path)
     free_image_data(data);
     free_image_data(new_data);
     return;
-    
 }
 
 void color_grey(char *source_path){
@@ -465,3 +495,4 @@ void color_grey(char *source_path){
  
     return;
 }
+
