@@ -133,7 +133,7 @@ void max_pixel(char *source_path)
 		}
 	}
         
-    printf("max_pixel(%d,%d): %d, %d, %d\n",x_max,y_max,r,g,b);
+    printf("max_pixel (%d, %d): %d, %d, %d\n",x_max,y_max,r,g,b);
 	
 	free_image_data(data);
 	return ;
@@ -179,7 +179,7 @@ void min_pixel (char *source_path)
 		}
 	}
         
-    printf("min_pixel(%d,%d): %d, %d, %d\n",x_min,y_min,r,g,b);
+    printf("min_pixel (%d,%d): %d, %d, %d\n",x_min,y_min,r,g,b);
 	
 	free_image_data(data);
 	return ;
@@ -399,15 +399,44 @@ void invert(char *source_path)
     read_image_data(source_path, &data, &width, &height, &channel_count);
 
     int i;
-    for(i=0; i<width*height*channel_count; i=i+3)
+    for(i=0; i<width*height*channel_count; i++)
     {
         data[i] = 255-data[i];
-        data[i+1] = 255-data[i+1];
-        data[i+2] = 255-data[i+2];
     }
 
     write_image_data("image_out.bmp", data, width, height);
     free_image_data(data);
+    return;
+}
+
+void rotate_cw(char *source_path)
+{
+    int width = 0;
+    int height = 0;
+    unsigned char *data;
+    int channel_count;
+
+    unsigned char *new_data;
+
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+
+    read_image_data(source_path, &new_data, &width, &height, &channel_count);
+
+    int i;
+    int j;
+    for(j=0; j<height; j++)
+    {
+        for(i=0; i<width; i++)
+        {
+        new_data[(i*height + (height -1 -j))*channel_count] = data[(j*width + i)*channel_count];
+        new_data[(i*height + (height -1 -j))*channel_count +1] = data[(j*width + i)*channel_count +1];
+        new_data[(i*height + (height -1 -j))*channel_count +2] = data[(j*width + i)*channel_count +2];
+        }
+    }
+
+    write_image_data("image_out.bmp", new_data, height, width);
+    free_image_data(data);
+    free_image_data(new_data);
     return;
 }
 
@@ -440,10 +469,9 @@ void rotate_acw(char *source_path)
     free_image_data(data);
     free_image_data(new_data);
     return;
-    
 }
 
-void color_grey(char *source_path){
+void color_gray(char *source_path){
  
     int width = 0;
     int height = 0;
@@ -500,6 +528,26 @@ void color_desaturate(char *source_path)
     }
     
     write_image_data("image_out.bmp", data, width, height);
+    return;
+}
+
+void color_gray_luminance(char *source_path){
+    int width = 0;
+    int height = 0;
+    unsigned char *data;
+    int channel_count;
+ 
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+   
+    int i;
+    for(i=0; i<width*height*channel_count; i=i+3){
+        data[i]= (0.21*data[i]+0.72*data[i+1]+0.07*data[i+2])/3;
+        data[i+1]= data[i];
+        data[i+2]= data[i];
+    }
+    write_image_data("image_out.bmp", data, width, height);
+    free_image_data(data);
+ 
     return;
 }
 
