@@ -399,11 +399,9 @@ void invert(char *source_path)
     read_image_data(source_path, &data, &width, &height, &channel_count);
 
     int i;
-    for(i=0; i<width*height*channel_count; i=i+3)
+    for(i=0; i<width*height*channel_count; i++)
     {
         data[i] = 255-data[i];
-        data[i+1] = 255-data[i+1];
-        data[i+2] = 255-data[i+2];
     }
 
     write_image_data("image_out.bmp", data, width, height);
@@ -430,9 +428,9 @@ void rotate_cw(char *source_path)
     {
         for(i=0; i<width; i++)
         {
-        new_data[((i*height + (height -1 -j)))*channel_count] = data[(j*width + 1)*channel_count];
-        new_data[((i*height + (height -1 -j)))*channel_count +1] = data[(j*width + 1)*channel_count +1];
-        new_data[((i*height + (height -1 -j)))*channel_count +2] = data[(j*width + 1)*channel_count +2];
+        new_data[(i*height + (height -1 -j))*channel_count] = data[(j*width + i)*channel_count];
+        new_data[(i*height + (height -1 -j))*channel_count +1] = data[(j*width + i)*channel_count +1];
+        new_data[(i*height + (height -1 -j))*channel_count +2] = data[(j*width + i)*channel_count +2];
         }
     }
 
