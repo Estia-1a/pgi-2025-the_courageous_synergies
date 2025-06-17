@@ -179,7 +179,7 @@ void min_pixel (char *source_path)
 		}
 	}
         
-    printf("min_pixel(%d,%d): %d, %d, %d\n",x_min,y_min,r,g,b);
+    printf("min_pixel (%d,%d): %d, %d, %d\n",x_min,y_min,r,g,b);
 	
 	free_image_data(data);
 	return ;
