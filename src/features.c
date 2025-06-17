@@ -502,3 +502,65 @@ void color_desaturate(char *source_path)
     write_image_data("image_out.bmp", data, width, height);
     return;
 }
+
+void mirror_horizontal(char *source_path)
+{
+    int width=0, height=0;
+    unsigned char* data;
+    unsigned char* new_data;
+    int channel_count;
+    pixelRGB *Pix1;
+    pixelRGB *Pix2;
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+    read_image_data(source_path, &new_data, &width, &height, &channel_count);
+    int x,y;
+    for (y=0; y<height;y++)
+    {
+        for (x=0; x<width; x++)
+        {
+            Pix1 = get_pixel(data, width, height, channel_count, x, y);
+            Pix2 = get_pixel(new_data, width, height, channel_count, width-1-x, y);
+            Pix2->R=Pix1->R;
+            Pix2->G=Pix1->G;
+            Pix2->B=Pix1->B;
+
+        }
+    }
+    write_image_data("image_out.bmp", new_data, width, height);
+    free_image_data(data);
+    return;
+}
+
+void mirror_vertical(char *source_path)
+{int width=0, height=0;
+    unsigned char* data;
+    unsigned char* new_data;
+    int channel_count;
+    pixelRGB *Pix1;
+    pixelRGB *Pix2;
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+    read_image_data(source_path, &new_data, &width, &height, &channel_count);
+    int x,y;
+    for (x=0; x<height;x++)
+    {
+        for (y=0; y<width; y++)
+        {
+            Pix1 = get_pixel(data, width, height, channel_count, x, y);
+            Pix2 = get_pixel(new_data, width, height, channel_count, x, height-1-y);
+            Pix2->R=Pix1->R;
+            Pix2->G=Pix1->G;
+            Pix2->B=Pix1->B;
+
+        }
+    }
+    write_image_data("image_out.bmp", new_data, width, height);
+    free_image_data(data);
+    return;
+}
+
+void mirror_total(char *source_path)
+{
+    mirror_horizontal(source_path);
+    mirror_vertical("image_out.bmp");
+    return;
+}
