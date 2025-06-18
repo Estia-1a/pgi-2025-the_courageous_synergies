@@ -116,7 +116,7 @@ void max_pixel(char *source_path)
 
 	pixelRGB *pixel_max;
 	
-    int somme_max = 0;
+    int somme_max = -1;
 	for (y=0;y<height; y=y+1){
 		for (x=0; x < width; x=x+1) {
 			pixel_max=get_pixel(data, width, height, channel_count, x, y);
@@ -159,7 +159,7 @@ void min_pixel (char *source_path)
 
 	pixelRGB *pixel_min;
 	
-    int somme_min = 255*3;
+    int somme_min = 255*3+1;
 	for (y=0;y<width; y=y+1){
 		for (x=0; x < height; x=x+1) {
 			pixel_min=get_pixel(data, width, height, channel_count, x, y);
@@ -400,7 +400,7 @@ void invert(char *source_path)
     read_image_data(source_path, &data, &width, &height, &channel_count);
 
     int i;
-    for(i=0; i<width*height*channel_count; i++)
+    for(i=0; i<width*height*3; i++)
     {
         data[i] = 255-data[i];
     }
@@ -646,5 +646,46 @@ void scale_nearest(char *source_path, float X)
     write_image_data("image_out.bmp", new_data, new_width, new_height);
     free_image_data(data);
     free(new_data);
+    return;
+}
+
+void scale_crop(char *source_path, int center_x, int center_y, int width, int height){
+    int old_width = 0;
+    int old_height = 0;
+    unsigned char *old_data;
+    int channel_count;
+ 
+    read_image_data(source_path, &old_data, &old_width, &old_height, &channel_count);
+    unsigned char *data = malloc(width*height*channel_count);
+    if(data == NULL)
+    {
+        printf("erreur : allocation mémoire");
+        return;
+    }
+
+    int j; 
+    for(j=0; j<width*height*channel_count; j++)
+        data[j] = 0;
+
+    int x, y,i;
+    int first_x, first_y;
+    for(y=0; y<height; y++){
+        for(x=0; x<width; x++){
+            first_x = center_x - width/2 + x;
+            first_y = center_y - height/2 + y;
+
+            if(first_x > 0 && first_x < old_width && first_y > 0 && first_y < old_height)
+            {
+                for(i=0; i<channel_count; i++)
+                {
+                    data[(y * width + x) * channel_count + i] = old_data[(first_y * old_width + first_x)*channel_count + i];
+                }
+            }
+        }
+    }
+
+    write_image_data("image_out.bmp", data, width, height);
+    free_image_data(old_data);
+    free(data);
     return;
 }
