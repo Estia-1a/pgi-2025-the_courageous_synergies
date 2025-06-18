@@ -400,7 +400,7 @@ void invert(char *source_path)
     read_image_data(source_path, &data, &width, &height, &channel_count);
 
     int i;
-    for(i=0; i<width*height*channel_count; i++)
+    for(i=0; i<width*height*3; i++)
     {
         data[i] = 255-data[i];
     }
