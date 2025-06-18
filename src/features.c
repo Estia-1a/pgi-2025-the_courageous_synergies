@@ -1,6 +1,7 @@
 #include <estia-image.h>
 #include <stdio.h>
-
+#include <stdlib.h>
+#include <math.h>
 #include "features.h"
 #include "utils.h"
 
@@ -594,7 +595,7 @@ void mirror_vertical(char *source_path)
         for (y=0; y<width; y++)
         {
             Pix1 = get_pixel(data, width, height, channel_count, x, y);
-            Pix2 = get_pixel(new_data, width, height, channel_count, x, height-1-y);
+            Pix2 = get_pixel(new_data, width, height, channel_count, x, width-1-y);
             Pix2->R=Pix1->R;
             Pix2->G=Pix1->G;
             Pix2->B=Pix1->B;
@@ -609,6 +610,41 @@ void mirror_vertical(char *source_path)
 void mirror_total(char *source_path)
 {
     mirror_horizontal(source_path);
-    mirror_vertical("image_out.bmp");
+    rename("image_out.bmp", "image_out_temp.bmp");
+    mirror_vertical("image_out_temp.bmp");
+    remove("image_out_temp.bmp");
+    return;
+}
+
+void scale_nearest(char *source_path, float X)
+{
+    int width = 0;
+    int height = 0;
+    int i, j, x, y;
+    unsigned char *data; 
+    int channel_count;
+    pixelRGB* Pix1;
+    pixelRGB* Pix2;
+    printf("%f\n", X);
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+    int new_width = (int)(X*width);
+    int new_height = (int)(X*height);
+    unsigned char *new_data = malloc(new_width * new_height * channel_count);
+    for (i=0; i<new_height; i++)
+    {
+        for (j=0; j<new_width;j++)
+        {
+            x=j/X;
+            y=i/X;
+            Pix1 = get_pixel(data, width, height, channel_count, x, y);
+            Pix2 = get_pixel(new_data, new_width, new_height, channel_count, j, i);
+            Pix2->R = Pix1->R;
+            Pix2->G= Pix1->G;
+            Pix2->B = Pix1->B;
+        }
+    }
+    write_image_data("image_out.bmp", new_data, new_width, new_height);
+    free_image_data(data);
+    free(new_data);
     return;
 }
