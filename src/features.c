@@ -625,7 +625,6 @@ void scale_nearest(char *source_path, float X)
     int channel_count;
     pixelRGB* Pix1;
     pixelRGB* Pix2;
-    printf("%f\n", X);
     read_image_data(source_path, &data, &width, &height, &channel_count);
     int new_width = (int)(X*width);
     int new_height = (int)(X*height);
@@ -687,5 +686,91 @@ void scale_crop(char *source_path, int center_x, int center_y, int width, int he
     write_image_data("image_out.bmp", data, width, height);
     free_image_data(old_data);
     free(data);
+    return;
+}
+
+void scale_bilinear(char *source_path, float X)
+{
+    int width = 0;
+    int height = 0;
+    int i, j;
+    unsigned char *data; 
+    int channel_count;
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+    int new_width = (int)(X*width);
+    int new_height = (int)(X*height);
+    unsigned char *new_data = malloc(new_width * new_height * channel_count);
+    
+    float old_x = 0;
+    float old_y = 0;
+    int x_0 = 0;
+    int y_0 = 0;
+    int x_1 = 0;
+    int y_1 = 0;
+    float dx = 0;
+    float dy = 0;
+
+    pixelRGB* q11;
+    pixelRGB* q12;
+    pixelRGB* q21;
+    pixelRGB* q22;
+
+    float p1_R = 0;
+    float p2_R = 0;
+    float p1_G = 0;
+    float p2_G = 0;
+    float p1_B = 0;
+    float p2_B = 0;
+    
+    float r_R = 0;
+    float r_G = 0;
+    float r_B = 0;
+
+    for (i=0; i<new_height; i++)
+    {
+        for (j=0; j<new_width;j++)
+        {
+            old_x = j/X;
+            old_y = i/X;
+            x_0 = (int)old_x;
+            y_0 = (int)old_y;
+            x_1 = x_0 + 1;
+            y_1 = y_0 + 1;
+            dx = old_x - x_0;
+            dy = old_y - y_0;
+
+            if(x_1 >= width)
+                x_1 = width -1;
+            if(y_1 >= height)
+                y_1 = height -1;
+            if(x_0 < 0)
+                x_0 = 0;
+            if(y_0 < 0)
+                y_0 = 0;
+
+            q11 = get_pixel(data, width, height, channel_count, x_0, y_0);
+            q12 = get_pixel(data, width, height, channel_count, x_0, y_1);
+            q21 = get_pixel(data, width, height, channel_count, x_1, y_0);
+            q22 = get_pixel(data, width, height, channel_count, x_1, y_1);
+
+            p1_R = q11->R * (1-dx) + q21->R*dx;
+            p2_R = q12->R * (1-dy) + q22->R*dy;
+            p1_G = q11->G * (1-dx) + q21->G*dx;
+            p2_G = q12->G * (1-dy) + q22->G*dy;
+            p1_B = q11->B * (1-dx) + q21->B*dx;
+            p2_B = q12->B * (1-dy) + q22->B*dy;
+
+            r_R = p1_R * (1-dy) + p2_R*dy;
+            r_G = p1_G * (1-dy) + p2_G*dy;
+            r_B = p1_B * (1-dy) + p2_B*dy;
+
+            new_data[(i*new_width + j)*channel_count] = (unsigned char)r_R;
+            new_data[(i*new_width + j)*channel_count +1] = (unsigned char)r_G;
+            new_data[(i*new_width + j)*channel_count +2] = (unsigned char)r_B;
+        }
+    }
+    write_image_data("image_out.bmp", new_data, new_width, new_height);
+    free_image_data(data);
+    free(new_data);
     return;
 }
