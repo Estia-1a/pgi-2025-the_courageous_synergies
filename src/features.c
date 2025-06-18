@@ -1,5 +1,6 @@
 #include <estia-image.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "features.h"
 #include "utils.h"
@@ -548,5 +549,46 @@ void color_gray_luminance(char *source_path){
     write_image_data("image_out.bmp", data, width, height);
     free_image_data(data);
  
+    return;
+}
+
+void scale_crop(char *source_path, int center_x, int center_y, int width, int height){
+    int old_width = 0;
+    int old_height = 0;
+    unsigned char *old_data;
+    int channel_count;
+ 
+    read_image_data(source_path, &old_data, &old_width, &old_height, &channel_count);
+    unsigned char *data = malloc(width*height*channel_count);
+    if(data == NULL)
+    {
+        printf("erreur : allocation mémoire");
+        return;
+    }
+
+    int j; 
+    for(j=0; j<width*height*channel_count; j++)
+        data[j] = 0;
+
+    int x, y,i;
+    int first_x, first_y;
+    for(y=0; y<height; y++){
+        for(x=0; x<width; x++){
+            first_x = center_x - width/2 + x;
+            first_y = center_y - height/2 + y;
+
+            if(first_x > 0 && first_x < old_width && first_y > 0 && first_y < old_height)
+            {
+                for(i=0; i<channel_count; i++)
+                {
+                    data[(y * width + x) * channel_count + i] = old_data[(first_y * old_width + first_x)*channel_count + i];
+                }
+            }
+        }
+    }
+
+    write_image_data("image_out.bmp", data, width, height);
+    free_image_data(old_data);
+    free(data);
     return;
 }
