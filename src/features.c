@@ -116,7 +116,7 @@ void max_pixel(char *source_path)
 
 	pixelRGB *pixel_max;
 	
-    int somme_max = 0;
+    int somme_max = -1;
 	for (y=0;y<height; y=y+1){
 		for (x=0; x < width; x=x+1) {
 			pixel_max=get_pixel(data, width, height, channel_count, x, y);
@@ -159,7 +159,7 @@ void min_pixel (char *source_path)
 
 	pixelRGB *pixel_min;
 	
-    int somme_min = 255*3;
+    int somme_min = 255*3+1;
 	for (y=0;y<width; y=y+1){
 		for (x=0; x < height; x=x+1) {
 			pixel_min=get_pixel(data, width, height, channel_count, x, y);
