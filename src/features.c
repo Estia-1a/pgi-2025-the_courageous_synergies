@@ -662,18 +662,26 @@ void scale_crop(char *source_path, int center_x, int center_y, int width, int he
         return;
     }
 
-    int j; 
-    for(j=0; j<width*height*channel_count; j++)
-        data[j] = 0;
+    int w2 = width/2;
+    int h2 = height/2;
+
+    if((center_x - w2) < 0)
+        center_x = w2;
+    if((center_x + w2) > old_width)
+        center_x = old_width -w2;
+    if((center_y - h2) < 0)
+        center_y = h2;
+    if((center_y + h2) > old_height)
+        center_y = old_height -h2;
 
     int x, y,i;
     int first_x, first_y;
     for(y=0; y<height; y++){
         for(x=0; x<width; x++){
-            first_x = center_x - width/2 + x;
-            first_y = center_y - height/2 + y;
+            first_x = center_x - w2 + x;
+            first_y = center_y - h2 + y;
 
-            if(first_x > 0 && first_x < old_width && first_y > 0 && first_y < old_height)
+            if(first_x >= 0 && first_x < old_width && first_y >= 0 && first_y < old_height)
             {
                 for(i=0; i<channel_count; i++)
                 {
