@@ -74,8 +74,8 @@ int main(int argc, char **argv) {
   if ( strncmp( configuration.command, "stat_report", 11 ) == 0 ) {
     stat_report(configuration.filenames[0]);
   }
-  if ( strncmp( configuration.command, "invert", 10 ) == 0 ) {
-    invert(configuration.filenames[0]);
+  if ( strncmp( configuration.command, "color_invert", 12 ) == 0 ) {
+    color_invert(configuration.filenames[0]);
   }
   if ( strncmp( configuration.command, "color_gray_luminance", 20 ) == 0 ) {
     color_gray_luminance(configuration.filenames[0]);

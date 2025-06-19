@@ -390,7 +390,7 @@ void color_blue(char *source_path)
     return;
 }
 
-void invert(char *source_path)
+void color_invert(char *source_path)
 {
     int width = 0;
     int height = 0;
