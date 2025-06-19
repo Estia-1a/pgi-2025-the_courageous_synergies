@@ -421,7 +421,7 @@ void rotate_cw(char *source_path)
 
     read_image_data(source_path, &data, &width, &height, &channel_count);
 
-    read_image_data(source_path, &new_data, &width, &height, &channel_count);
+    read_image_data(source_path, &new_data, &width, &height, &channel_count); 
 
     int i;
     int j;
@@ -594,14 +594,14 @@ void mirror_vertical(char *source_path)
     {
         for (y=0; y<width; y++)
         {
-            Pix1 = get_pixel(data, width, height, channel_count, x, y);
-            Pix2 = get_pixel(new_data, width, height, channel_count, x, width-1-y);
+            Pix1 = get_pixel(data, width, height, channel_count, y, x);
+            Pix2 = get_pixel(new_data, width, height, channel_count, y, height-1-x);
             Pix2->R=Pix1->R;
             Pix2->G=Pix1->G;
             Pix2->B=Pix1->B;
-
         }
     }
+
     write_image_data("image_out.bmp", new_data, width, height);
     free_image_data(data);
     return;
