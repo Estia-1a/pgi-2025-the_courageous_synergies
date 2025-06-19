@@ -542,7 +542,7 @@ void color_gray_luminance(char *source_path){
    
     int i;
     for(i=0; i<width*height*channel_count; i=i+3){
-        data[i]= (0.21*data[i]+0.72*data[i+1]+0.07*data[i+2])/3;
+        data[i]= (0.21*data[i]+0.72*data[i+1]+0.07*data[i+2]);
         data[i+1]= data[i];
         data[i+2]= data[i];
     }
